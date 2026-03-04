@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Maatwerk websites gebouwd met HTML, CSS en JavaScript. Geen templates, geen WordPress — alleen snelle, schone en schaalbare front-end code." />
+    <meta name="theme-color" content="#0B1120" />
+    <title>Jordy Frohn — Front-end Developer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+<header class="header" id="header">
+    <div class="header__inner container">
+        <a href="#" class="logo" aria-label="Terug naar boven">JF</a>
+
+        <nav class="header__nav header__nav--center" aria-label="Primaire navigatie">
+            <a href="#over" class="nav-link">Over</a>
+            <a href="#expertise" class="nav-link">Expertise</a>
+            <a href="#aanpak" class="nav-link">Aanpak</a>
+            <a href="#proces" class="nav-link">Proces</a>
+        </nav>
+
+        <nav class="header__nav header__nav--right" aria-label="Contact link">
+            <a href="#contact" class="nav-link nav-link--cta">Contact</a>
+        </nav>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu openen" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+        </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobiele navigatie" aria-hidden="true">
+      <a href="#over"       class="mobile-menu__link">Over</a>
+      <a href="#expertise"  class="mobile-menu__link">Expertise</a>
+      <a href="#proces"     class="mobile-menu__link">Proces</a>
+      <a href="#contact"    class="mobile-menu__link">Contact</a>
+    </nav>
+</header>
+
+
+  <main>
+
+    <!-- ══════════════════════════════════════════
+         01 · HERO
+    ═══════════════════════════════════════════ -->
+    <section class="hero" id="hero" aria-label="Introductie">
+        <div class="hero__bg" aria-hidden="true">
+            <div class="hero__grid"></div>
+            <div class="hero__glow hero__glow--1"></div>
+            <div class="hero__glow hero__glow--2"></div>
+        </div>
+        <div class="container">
+            <div class="hero__content">
+                <span class="label">Front-end Developer</span>
+
+                <h1 class="hero__title">
+                    Maatwerk websites<br />
+                    <em class="hero__title-em">die werken.</em>
+                </h1>
+
+                <p class="hero__sub">
+                    Geen templates, maar maatwerk websites die passen bij jouw bedrijf.
+                    Ik denk actief met je mee en bouw een website die niet alleen mooi is,
+                    maar ook resultaat oplevert.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn--primary">Neem contact op</a>
+                    <a href="#over"    class="btn btn--ghost">Meer over mij</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         02 · ABOUT
+    ═══════════════════════════════════════════ -->
+    <section class="about section" id="over" aria-labelledby="about-title">
+        <div class="container">
+            <div class="about__grid">
+                <div class="about__left reveal">
+                    <span class="label">Over mij</span>
+                    <div class="title-section">
+                        <h2 class="section-title" id="about-title">
+                            Gebouwd met passie, gedreven door kwaliteit
+                        </h2>
+                        <div class="profile">
+                            <img src="images/profile.jpg" alt="Foto van Jordy Frohn" class="profile__img" />
+                            <p class="profile__name">Jordy Frohn</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about__right reveal" data-delay="0.15">
+                    <p class="about__text">
+                        Als front-end developer met een achtergrond in Communication & Multimedia Design 
+                        ontwikkel ik websites waarin strategie, design en techniek samenkomen.
+                        Ik werk vanuit een duidelijke ontwerpvisie: eerst begrijpen, dan ontwerpen, daarna bouwen.
+                        Door mijn kennis van UX, visuele hiërarchie en schone code creëer ik digitale ervaringen 
+                        die niet alleen mooi zijn, maar ook doelgericht functioneren.
+                    </p>
+                    <p class="about__text">
+                        Technische kwaliteit vormt de basis,
+                        zodat jouw website snel, betrouwbaar
+                        en toekomstbestendig blijft werken.
+                    </p>
+                    <p class="about__text">
+                        Ik denk mee over structuur, positionering en gebruikersflow, niet alleen over code.
+                        Elk project begint met de juiste vragen: wie is je doelgroep, wat is je doel,
+                        en hoe zet je die website in als strategisch hulpmiddel?
+                    </p>
+                    <div class="tag-list" role="list" aria-label="Technologieën">
+                        <span class="tag" role="listitem">HTML5</span>
+                        <span class="tag" role="listitem">CSS3</span>
+                        <span class="tag" role="listitem">JavaScript</span>
+                        <span class="tag" role="listitem">Performance</span>
+                        <span class="tag" role="listitem">Responsive</span>
+                        <span class="tag" role="listitem">SEO</span>
+                        <span class="tag" role="listitem">Figma</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         03 · EXPERTISE
+    ═══════════════════════════════════════════ -->
+    <section class="expertise section" id="expertise" aria-labelledby="expertise-title">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="label">Expertise</span>
+                <h2 class="section-title" id="expertise-title">Mijn Diensten</h2>
+            </div>
+
+            <div class="cards-grid">
+                <article class="card reveal" data-delay="0">
+                    <span class="card__num" aria-hidden="true">01</span>
+                    <h3 class="card__title">Maatwerk<br />Development</h3>
+                    <p class="card__text">
+                        Elke website is geschreven rond jouw bedrijfsdoelstellingen.
+                        Geen templates, geen overbodige code, maar doelgerichte technische
+                        keuzes die bijdragen aan resultaat.
+                    </p>
+                    <div class="card__line" aria-hidden="true"></div>
+                </article>
+
+                <article class="card reveal" data-delay="0.1">
+                    <span class="card__num" aria-hidden="true">02</span>
+                    <h3 class="card__title">Meedenken &<br />Strategie</h3>
+                    <p class="card__text">
+                        Ik denk actief met je mee over structuur,
+                        positionering en gebruikerservaring.
+                        Samen zorgen we dat jouw website aansluit
+                        bij je doelen.
+                    </p>
+                    <div class="card__line" aria-hidden="true"></div>
+                </article>
+
+                <article class="card reveal" data-delay="0.2">
+                    <span class="card__num" aria-hidden="true">03</span>
+                    <h3 class="card__title">Langdurig<br />Onderhoud</h3>
+                    <p class="card__text">
+                        Na launch ben je niet alleen. Ik zorg voor doorlopend onderhoud,
+                        updates en monitoring. Zo blijft je website veilig, snel en
+                        future-proof.
+                    </p>
+                    <div class="card__line" aria-hidden="true"></div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         04 · USP
+    ═══════════════════════════════════════════ -->
+    <section class="difference section" id="aanpak" aria-labelledby="difference-title">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="label">Mijn aanpak</span>
+            <h2 class="section-title" id="difference-title">
+                Het verschil zit in de aanpak
+            </h2>
+        </div>
+
+        <div class="difference__grid">
+            <!-- Others -->
+            <div class="difference__item">
+                <div class="difference__label">
+                    <h3>Veel websites worden zo gebouwd</h3>
+                </div>
+                <div class="difference__card difference__card--other reveal" data-delay="0">
+                    <ul>
+                        <li>Gebaseerd op standaard templates</li>
+                        <li>Page builders en plug-ins</li>
+                        <li>Onnodig zware code</li>
+                        <li>Beperkte flexibiliteit</li>
+                        <li>Minder focus op snelheid</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- You -->
+            <div class="difference__item">
+                <div class="difference__label">
+                    <h3>Mijn aanpak</h3>
+                </div>
+                <div class="difference__card difference__card--you reveal" data-delay="0.15">
+                    <ul>
+                        <li>Volledig maatwerk development</li>
+                        <li>Handgeschreven HTML, CSS en JavaScript</li>
+                        <li>Snelle en schone code</li>
+                        <li>Persoonlijk meedenken met jouw doelen</li>
+                        <li>Gebouwd voor groei en onderhoud</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         05 · PROCESS
+    ═══════════════════════════════════════════ -->
+    <section class="process section" id="proces" aria-labelledby="process-title">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="label">Werkwijze</span>
+                <h2 class="section-title" id="process-title">Van concept tot realisatie</h2>
+            </div>
+
+            <ol class="process__track" aria-label="Stappen in het proces">
+                <li class="process__step reveal" data-delay="0">
+                    <div class="process__num" aria-hidden="true">01</div>
+                    <h3 class="process__step-title">Intake</h3>
+                    <p class="process__step-text">
+                        We bespreken jouw doelen,
+                        doelgroep en wensen.
+                        Zo leggen we samen een sterke basis
+                        voor de website.                    
+                    </p>
+                </li>
+
+                <li class="process__step reveal" data-delay="0.1">
+                    <div class="process__num" aria-hidden="true">02</div>
+                    <h3 class="process__step-title">Ontwerp</h3>
+                    <p class="process__step-text">
+                        Structuur en gebruikerservaring staan centraal.
+                        Elke ontwerpbeslissing is actiegericht, zodat de bezoeker
+                        doet wat jij wilt.
+                    </p>
+                </li>
+
+                <li class="process__step reveal" data-delay="0.2">
+                    <div class="process__num" aria-hidden="true">03</div>
+                    <h3 class="process__step-title">Ontwikkeling</h3>
+                    <p class="process__step-text">
+                        Handgeschreven code, volledig geoptimaliseerd voor
+                        snelheid en toegankelijkheid.
+                    </p>
+                </li>
+
+                <li class="process__step reveal" data-delay="0.3">
+                    <div class="process__num" aria-hidden="true">04</div>
+                    <h3 class="process__step-title">Oplevering</h3>
+                    <p class="process__step-text">
+                        Live, getest en klaar. Met volledige overdracht
+                        en optioneel doorlopend beheer.
+                    </p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         06 · CONTACT
+    ═══════════════════════════════════════════ -->
+    <section class="contact section" id="contact" aria-labelledby="contact-title">
+        <div class="container">
+            <div class="contact__grid">
+                <div class="contact__info reveal">
+                    <span class="label">Contact</span>
+                    <h2 class="section-title" id="contact-title">
+                    Klaar om<br />te starten?
+                    </h2>
+                    <p class="contact__sub">
+                        Ik neem persoonlijk contact met je op, <br> meestal binnen één werkdag.
+                    </p>
+                    <div class="contact__links">
+                        <a href="mailto:info@jordyfrohn.nl" class="contact__link">
+                            info@jordyfrohn.nl
+                        </a>
+                    </div>
+                </div>
+
+            <form class="contact__form reveal" id="contactForm" data-delay="0.15" novalidate>
+
+                <div class="form-group">
+                    <input
+                        class="form-input"
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder=" "
+                        autocomplete="name"
+                        required
+                    />
+                    <label class="form-label" for="name">Naam</label>
+                </div>
+
+                <div class="form-group">
+                    <input
+                        class="form-input"
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder=" "
+                        autocomplete="email"
+                        required
+                    />
+                    <label class="form-label" for="email">E-mailadres</label>
+                </div>
+
+                <div class="form-group">
+                    <textarea
+                        class="form-input form-textarea"
+                        id="message"
+                        name="message"
+                        placeholder=" "
+                        required
+                    ></textarea>
+                    <label class="form-label" for="message">Jouw bericht</label>
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--full">
+                    Verstuur bericht
+                </button>
+
+            </form>
+
+            </div>
+        </div>
+    </section>
+
+  </main>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+<footer class="footer" aria-label="Footer">
+    <div class="container">
+        <div class="footer__inner">
+            <a href="#" class="footer__logo" aria-label="Terug naar boven">JF</a>
+            <p class="footer__copy">&copy; 2026 Jordy Frohn — Front-end Developer</p>
+            <nav class="footer__nav" aria-label="Footer navigatie">
+            <a href="#" class="footer__link">Privacy</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
