@@ -17,6 +17,8 @@
 </head>
 <body>
 
+  <canvas id="particles" aria-hidden="true"></canvas>
+
   <!-- ══════════════════════════════════════════
        HEADER
   ═══════════════════════════════════════════ -->
@@ -51,9 +53,7 @@
     </nav>
 </header>
 
-
-  <main>
-
+<main>
     <!-- ══════════════════════════════════════════
          01 · HERO
     ═══════════════════════════════════════════ -->
@@ -99,10 +99,10 @@
                         <h2 class="section-title" id="about-title">
                             Gebouwd met passie, gedreven door kwaliteit
                         </h2>
-                        <div class="profile">
+                        <!-- <div class="profile">
                             <img src="images/profile.jpg" alt="Foto van Jordy Frohn" class="profile__img" />
                             <p class="profile__name">Jordy Frohn</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -238,7 +238,53 @@
 
 
     <!-- ══════════════════════════════════════════
-         05 · PROCESS
+         05 · WORKS
+    ═══════════════════════════════════════════ -->
+    <section class="works section" id="werken" aria-labelledby="works-title">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="label">Portfolio</span>
+                <h2 class="section-title" id="works-title">Eerdere werken</h2>
+            </div>
+        </div>
+
+        <div class="works-carousel-wrapper">
+            <div class="works-carousel" role="region" aria-label="Portfolio carousel">
+                <!-- Original items -->
+                <a class="work-card" href="https://hairdressbyjessy.nl/" target="_blank" rel="noopener noreferrer">
+                    <div class="work-card__image" style="background-image: url('assets/jessys.jpg')" role="img" aria-label="Hairdress By Jessy"></div>
+                    <div class="work-card__content">
+                        <h3 class="work-card__title">Hairdress By Jessy</h3>
+                        <p class="work-card__text">Mijn eerste officiële website</p>
+                    </div>
+                </a>
+
+                <a class="work-card" href="https://mia-mms-2526.github.io/team06/" target="_blank" rel="noopener noreferrer">
+                    <div class="work-card__image" style="background-image: url('assets/mms.png')" role="img" aria-label="Jouw Verborgen Goudmijn"></div>
+                    <div class="work-card__content">
+                        <h3 class="work-card__title">Jouw Verborgen Goudmijn</h3>
+                        <p class="work-card__text">
+                            Samen met een projectteam hebben we data
+                            van het CBS vertaald naar een multimedia story.</p>
+                    </div>
+                </a>
+
+                <a class="work-card" href="https://mia-dp-2425.github.io/team03/" target="_blank" rel="noopener noreferrer">
+                    <div class="work-card__image" style="background-image: url('assets/minibytes.png')" role="img" aria-label="Minibytes"></div>
+                    <div class="work-card__content">
+                        <h3 class="work-card__title">Minibytes</h3>
+                        <p class="work-card__text">
+                            Samen met een projectteam en in samenwerking met het Bernard Lievegoed College in Maastricht, 
+                            heb ik een workshop gegeven waarin scholieren kennismaakten met programmeren in p5.js.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         06 · PROCESS
     ═══════════════════════════════════════════ -->
     <section class="process section" id="proces" aria-labelledby="process-title">
         <div class="container">
@@ -263,7 +309,7 @@
                     <div class="process__num" aria-hidden="true">02</div>
                     <h3 class="process__step-title">Ontwerp</h3>
                     <p class="process__step-text">
-                        Structuur en gebruikerservaring staan centraal.
+                        Structuur en gebruikerservaring staan centraal. 
                         Elke ontwerpbeslissing is actiegericht, zodat de bezoeker
                         doet wat jij wilt.
                     </p>
@@ -292,7 +338,7 @@
 
 
     <!-- ══════════════════════════════════════════
-         06 · CONTACT
+         07 · CONTACT
     ═══════════════════════════════════════════ -->
     <section class="contact section" id="contact" aria-labelledby="contact-title">
         <div class="container">
@@ -306,62 +352,55 @@
                         Ik neem persoonlijk contact met je op, <br> meestal binnen één werkdag.
                     </p>
                     <div class="contact__links">
-                        <a href="mailto:info@jordyfrohn.nl" class="contact__link">
-                            info@jordyfrohn.nl
+                        <a href="mailto:jordy.frohn@gmail.com" class="contact__link">
+                            jordy.frohn@gmail.com
                         </a>
                     </div>
                 </div>
 
-            <form class="contact__form reveal" id="contactForm" data-delay="0.15" novalidate>
-
-                <div class="form-group">
-                    <input
-                        class="form-input"
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder=" "
-                        autocomplete="name"
-                        required
-                    />
-                    <label class="form-label" for="name">Naam</label>
-                </div>
-
-                <div class="form-group">
-                    <input
-                        class="form-input"
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder=" "
-                        autocomplete="email"
-                        required
-                    />
-                    <label class="form-label" for="email">E-mailadres</label>
-                </div>
-
-                <div class="form-group">
-                    <textarea
-                        class="form-input form-textarea"
-                        id="message"
-                        name="message"
-                        placeholder=" "
-                        required
-                    ></textarea>
-                    <label class="form-label" for="message">Jouw bericht</label>
-                </div>
-
-                <button type="submit" class="btn btn--primary btn--full">
-                    Verstuur bericht
-                </button>
-
-            </form>
-
+                <form class="contact__form reveal" id="contactForm" data-delay="0.15" novalidate>
+                    <div class="form-group">
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder=" "
+                            autocomplete="name"
+                            required
+                        />
+                        <label class="form-label" for="name">Naam</label>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            class="form-input"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder=" "
+                            autocomplete="email"
+                            required
+                        />
+                        <label class="form-label" for="email">E-mailadres</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea
+                            class="form-input form-textarea"
+                            id="message"
+                            name="message"
+                            placeholder=" "
+                            required
+                        ></textarea>
+                        <label class="form-label" for="message">Jouw bericht</label>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full">
+                        Verstuur bericht
+                    </button>
+                </form>
             </div>
         </div>
     </section>
-
-  </main>
+</main>
 
 
   <!-- ══════════════════════════════════════════

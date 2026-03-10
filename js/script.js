@@ -3,10 +3,116 @@
    ============================================================= */
 'use strict';
 
+/* ─────────────────────────────────────────────────────────────
+   PARTICLES — animated floating background
+───────────────────────────────────────────────────────────── */
+(function initParticles() {
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const COUNT = 100;
+  let particles = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function randomParticle() {
+    return {
+      x:     Math.random() * W,
+      y:     Math.random() * H,
+      r:     Math.random() * 1.5 + 0.5,
+      vx:    (Math.random() - 0.5) * 0.3,
+      vy:    (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.4 + 0.1,
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: COUNT }, randomParticle);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(158, 185, 246, ${p.alpha})`;
+      ctx.fill();
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < -5)  p.x = W + 5;
+      if (p.x > W + 5) p.x = -5;
+      if (p.y < -5)  p.y = H + 5;
+      if (p.y > H + 5) p.y = -5;
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, { passive: true });
+  init();
+  draw();
+})();
+
 /* ── Utilities ────────────────────────────────────────────── */
 const $  = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
+
+/* ─────────────────────────────────────────────────────────────
+   CAROUSEL — drag / swipe to scroll
+───────────────────────────────────────────────────────────── */
+(function initCarousel() {
+  const wrapper = $('.works-carousel-wrapper');
+  if (!wrapper) return;
+
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let moved = false;
+
+  function onPointerDown(e) {
+    isDown = true;
+    moved = false;
+    startX = (e.touches ? e.touches[0].pageX : e.pageX) - wrapper.offsetLeft;
+    scrollLeft = wrapper.scrollLeft;
+    wrapper.classList.add('is-dragging');
+  }
+
+  function onPointerMove(e) {
+    if (!isDown) return;
+    const x = (e.touches ? e.touches[0].pageX : e.pageX) - wrapper.offsetLeft;
+    const delta = x - startX;
+    if (Math.abs(delta) > 4) moved = true;
+    wrapper.scrollLeft = scrollLeft - delta;
+  }
+
+  function onPointerUp() {
+    isDown = false;
+    wrapper.classList.remove('is-dragging');
+  }
+
+  // Prevent click on card after a drag
+  wrapper.addEventListener('click', (e) => {
+    if (moved) e.preventDefault();
+  }, true);
+
+  // Mouse events
+  wrapper.addEventListener('mousedown',  onPointerDown);
+  window.addEventListener('mousemove',   onPointerMove);
+  window.addEventListener('mouseup',     onPointerUp);
+
+  // Touch events
+  wrapper.addEventListener('touchstart', onPointerDown, { passive: true });
+  wrapper.addEventListener('touchmove',  onPointerMove, { passive: true });
+  wrapper.addEventListener('touchend',   onPointerUp);
+})();
 
 
 
@@ -161,28 +267,70 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
 
 /* ─────────────────────────────────────────────────────────────
-   CONTACT FORM — basic feedback
+   CONTACT FORM — Web3Forms integration
 ───────────────────────────────────────────────────────────── */
 (function initForm() {
   const form = $('#contactForm');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const btn      = form.querySelector('button[type="submit"]');
+    const btn = form.querySelector('button[type="submit"]');
     const original = btn.textContent;
 
-    btn.textContent = 'Bericht verstuurd ✓';
-    btn.disabled    = true;
-    btn.style.cssText =
-      'background:#16a34a;border-color:#16a34a;transform:none;box-shadow:none;';
+    // Prepare form data
+    const formData = new FormData(form);
+    formData.append('access_key', 'c16ee694-71d8-4812-8f3f-9260bbe9bf72');
 
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.disabled    = false;
-      btn.style.cssText = '';
-      form.reset();
-    }, 4000);
+    // Show loading state
+    btn.textContent = 'Verstuuren...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Success state
+        btn.textContent = 'Bericht verstuurd ✓';
+        btn.style.cssText =
+          'background:#16a34a;border-color:#16a34a;transform:none;box-shadow:none;';
+        form.reset();
+
+        // Reset after 4 seconds
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.cssText = '';
+          btn.disabled = false;
+        }, 4000);
+      } else {
+        // Error from API
+        btn.textContent = 'Fout bij verzenden';
+        btn.style.cssText =
+          'background:#dc2626;border-color:#dc2626;transform:none;box-shadow:none;';
+
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.cssText = '';
+          btn.disabled = false;
+        }, 4000);
+      }
+    } catch (error) {
+      // Network error
+      btn.textContent = 'Verbindingsfout';
+      btn.style.cssText =
+        'background:#dc2626;border-color:#dc2626;transform:none;box-shadow:none;';
+
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.cssText = '';
+        btn.disabled = false;
+      }, 4000);
+    }
   });
 })();
