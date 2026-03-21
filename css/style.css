@@ -600,6 +600,22 @@ main > footer::before {
     box-shadow   var(--t-base);
 }
 
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    border-color var(--t-base),
+    box-shadow   var(--t-base);
+}
+
+.tilt-card.reveal,
+.tilt-card.reveal.is-visible {
+  transition:
+    border-color var(--t-base),
+    box-shadow   var(--t-base),
+    opacity      var(--t-slow);
+}
+
 /* Top shimmer line */
 .card::before {
   content: '';
@@ -615,6 +631,9 @@ main > footer::before {
   border-color: var(--clr-border-primary);
   transform: translateY(-6px);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+.tilt-card:hover {
+  transform: none;
 }
 .card:hover::before { opacity: 1; }
 
@@ -750,6 +769,7 @@ main > footer::before {
   overflow-y: hidden;
   width: 100%;
   margin-top: var(--s8);
+  padding-right: 3rem;
   cursor: grab;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;

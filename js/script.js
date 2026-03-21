@@ -334,3 +334,88 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
     }
   });
 })();
+
+
+/* ─────────────────────────────────────────────────────────────
+   EXPERTISE CARDS — custom tilt (pointer follow)
+───────────────────────────────────────────────────────────── */
+(function initExpertiseTilt() {
+  const cards = [...document.querySelectorAll('.expertise .tilt-card')];
+  if (!cards.length) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (reducedMotion || !canHover) return;
+
+  const MAX_ROTATION = 10;
+  const FOLLOW_SMOOTHNESS = 0.14;
+  const RESET_SMOOTHNESS = 0.18;
+  const HOVER_LIFT = 6;
+  const HOVER_SCALE = 1.01;
+
+  cards.forEach((card) => {
+    let currentRX = 0;
+    let currentRY = 0;
+    let targetRX = 0;
+    let targetRY = 0;
+    let isHovering = false;
+    let frameId = null;
+
+    function paintTransform() {
+      const lift = isHovering ? HOVER_LIFT : 0;
+      const scale = isHovering ? HOVER_SCALE : 1;
+
+      card.style.transform =
+        `perspective(900px) rotateX(${currentRY.toFixed(3)}deg) rotateY(${currentRX.toFixed(3)}deg) translateY(${-lift}px) scale(${scale})`;
+    }
+
+    function animate() {
+      const smoothness = isHovering ? FOLLOW_SMOOTHNESS : RESET_SMOOTHNESS;
+      currentRX += (targetRX - currentRX) * smoothness;
+      currentRY += (targetRY - currentRY) * smoothness;
+
+      const needsMoreFrames =
+        Math.abs(targetRX - currentRX) > 0.02 ||
+        Math.abs(targetRY - currentRY) > 0.02;
+
+      paintTransform();
+
+      if (needsMoreFrames || isHovering) {
+        frameId = requestAnimationFrame(animate);
+      } else {
+        frameId = null;
+        card.style.transform = '';
+      }
+    }
+
+    function queueAnimation() {
+      if (frameId !== null) return;
+      frameId = requestAnimationFrame(animate);
+    }
+
+    card.addEventListener('pointerenter', () => {
+      isHovering = true;
+      queueAnimation();
+    });
+
+    card.addEventListener('pointermove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+
+      const nx = x * 2 - 1;
+      const ny = y * 2 - 1;
+
+      targetRX = nx * MAX_ROTATION;
+      targetRY = -ny * MAX_ROTATION;
+      queueAnimation();
+    });
+
+    card.addEventListener('pointerleave', () => {
+      isHovering = false;
+      targetRX = 0;
+      targetRY = 0;
+      queueAnimation();
+    });
+  });
+})();
