@@ -9,7 +9,7 @@
   --clr-text:         #E2E8F0;
   --clr-muted:        #94A3B8;
   --clr-subtle:       #64748B;
-  --clr-primary:      linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  --clr-primary:      linear-gradient(135deg, #3b82f6 0%, #9b5de5 100%);
   --clr-primary-dark: linear-gradient(135deg, #1E40AF 0%, #5B21B6 100%);
   --clr-accent:       #22C55E;
   --clr-primary-glow: rgba(37, 99, 235, 0.12);
@@ -18,8 +18,8 @@
   --clr-border-primary: rgba(37, 99, 235, 0.5);
 
   /* ── Typography ──────────────────────────────────────────── */
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font: 'Roboto Mono', 'Courier New', monospace;
+  --font-heading: 'Syne', sans-serif;
 
   /* ── Spacing (8 px base) ─────────────────────────────────── */
   --s1:  0.5rem;    /*  8px */
@@ -227,10 +227,10 @@ main > footer::before {
   inset-inline: 0;
   z-index: 1000;
   height: var(--header-h);
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 2px solid #2563EB;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 2px solid transparent;
   transition:
     background       var(--t-slow),
     border-color     var(--t-slow),
@@ -238,11 +238,14 @@ main > footer::before {
 }
 
 .header.scrolled {
-  background: rgba(15, 23, 42, 0.95);
-  border-bottom-color: rgba(37, 99, 235, 0.45);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: rgba(37, 99, 235);
 }
 
 .header__inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -258,12 +261,15 @@ main > footer::before {
 }
 
 .header__nav--center {
-  flex: 1;
-  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .header__nav--right {
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 @media (max-width: 767px) {
@@ -313,7 +319,17 @@ main > footer::before {
   letter-spacing: -0.06em;
   color: var(--clr-text);
   position: relative;
-  transition: opacity var(--t-base);
+  display: inline-block;
+  transition: opacity var(--t-base), transform var(--t-base);
+}
+.logo:hover {
+  transform: translateX(6px);
+
+}
+.logo img {
+  width: 180px;
+  height: 180px;
+  margin-top: 2px;
 }
 .logo::before {
   content: '';
@@ -323,7 +339,6 @@ main > footer::before {
   border-radius: var(--r-sm);
   transition: border-color var(--t-base);
 }
-.logo:hover::before { border-color: var(--clr-border-primary); }
 
 /* Hamburger */
 .hamburger {
@@ -403,7 +418,7 @@ main > footer::before {
 
 
 /* =============================================================
-   HERO
+    HERO
    ============================================================= */
 .hero {
   position: relative;
@@ -473,7 +488,7 @@ main > footer::before {
 }
 
 .hero__content {
-  max-width: 780px;
+  max-width: 90%;
   padding-block: var(--s8);
 }
 
@@ -499,11 +514,11 @@ main > footer::before {
 }
 
 .hero__sub {
-  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-size: clamp(1rem, 2vw, 1rem);
   font-weight: 400;
   line-height: 1.75;
   color: var(--clr-muted);
-  max-width: 540px;
+  max-width: 70%;
   margin-bottom: var(--s8);
   opacity: 0;
   transform: translateY(20px);
@@ -595,9 +610,9 @@ main > footer::before {
   padding: var(--s8) var(--s6) var(--s6);
   overflow: hidden;
   transition:
-    border-color var(--t-base),
-    transform    var(--t-base),
-    box-shadow   var(--t-base);
+    border-color 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform    500ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .tilt-card {
@@ -629,7 +644,7 @@ main > footer::before {
 
 .card:hover {
   border-color: var(--clr-border-primary);
-  transform: translateY(-6px);
+  /* transform: translateY(-6px); */
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
 }
 .tilt-card:hover {

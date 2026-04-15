@@ -129,7 +129,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   function onScroll() {
     if (!ticking) {
       requestAnimationFrame(() => {
-        header.classList.toggle('scrolled', window.scrollY > 40);
+        header.classList.toggle('scrolled', window.scrollY > 0);
         ticking = false;
       });
       ticking = true;
