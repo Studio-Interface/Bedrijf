@@ -449,6 +449,16 @@ main > footer::before {
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
 }
 
+.hero__wave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
 .hero__glow {
   position: absolute;
   border-radius: 50%;
@@ -1106,31 +1116,65 @@ main > footer::before {
 
 .footer__inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--s4);
+  justify-content: center;
+  gap: var(--s3);
+  text-align: center;
+}
+
+.footer__inner p {
+  font-size: 0.8125rem;
+  color: var(--clr-subtle);
+  margin: 0;
 }
 
 .footer__logo {
-  font-size: 1.125rem;
-  font-weight: 900;
-  letter-spacing: -0.06em;
-  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__logo img {
+  height: 2rem;
+  width: auto;
+  object-fit: contain;
 }
 
 .footer__copy {
-  font-size: 0.8125rem;
-  color: var(--clr-subtle);
+  order: 2;
 }
 
-.footer__nav { display: flex; gap: var(--s4); }
-
-.footer__link {
-  font-size: 0.8125rem;
-  color: var(--clr-subtle);
-  transition: color var(--t-base);
+.footer__legal {
+  order: 3;
 }
-.footer__link:hover { color: var(--clr-text); }
+
+/* Desktop */
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .footer__logo {
+    order: 1;
+    justify-content: flex-start;
+  }
+
+  .footer__copy {
+    order: 2;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .footer__legal {
+    order: 3;
+    flex: 0 0 auto;
+    text-align: right;
+  }
+}
+
 
 
 /* =============================================================

@@ -60,6 +60,114 @@
   draw();
 })();
 
+/* ─────────────────────────────────────────────────────────────
+   HERO WAVE — flowing gradient line field
+───────────────────────────────────────────────────────────── */
+(function initHeroWave() {
+  const canvas = document.getElementById('heroWave');
+  if (!canvas) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ctx = canvas.getContext('2d');
+
+  const LINE_COUNT = 42;
+  const POINTS = 80;
+  const COLOR_A = [59, 130, 246];
+  const COLOR_B = [155, 93, 229];
+
+  let W = 0, H = 0, dpr = 1;
+  let t = 0;
+  let rafId = null;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function lerpColor(a, b, m) {
+    return [
+      Math.round(a[0] + (b[0] - a[0]) * m),
+      Math.round(a[1] + (b[1] - a[1]) * m),
+      Math.round(a[2] + (b[2] - a[2]) * m),
+    ];
+  }
+
+  function drawLine(i) {
+    const progress = i / (LINE_COUNT - 1);
+    const baseY = H * 0.5 + (progress - 0.5) * H * 0.9;
+
+    const amp = 28 + Math.sin(progress * Math.PI) * 60;
+    const freq = 0.0018 + progress * 0.0006;
+    const speed = 0.0006 + progress * 0.00045;
+    const phase = progress * Math.PI * 2;
+
+    const [r, g, b] = lerpColor(COLOR_A, COLOR_B, progress);
+    const edgeFade = Math.sin(progress * Math.PI);
+    const alpha = 0.06 + edgeFade * 0.22;
+
+    ctx.beginPath();
+    for (let p = 0; p <= POINTS; p++) {
+      const x = (p / POINTS) * W;
+      const wave =
+        Math.sin(x * freq + t * speed + phase) * amp +
+        Math.sin(x * freq * 2.3 + t * speed * 1.7 + phase * 0.6) * amp * 0.35;
+      const y = baseY + wave;
+      if (p === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round';
+    for (let i = 0; i < LINE_COUNT; i++) drawLine(i);
+    t += 16;
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    resize();
+    if (reducedMotion) {
+      frame();
+      cancelAnimationFrame(rafId);
+      return;
+    }
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+  }, { passive: true });
+
+  // Pause when hero leaves viewport
+  const hero = canvas.closest('.hero');
+  if (hero && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          if (!rafId && !reducedMotion) rafId = requestAnimationFrame(frame);
+        } else if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      });
+    }, { threshold: 0 });
+    io.observe(hero);
+  }
+
+  start();
+})();
+
 /* ── Utilities ────────────────────────────────────────────── */
 const $  = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
