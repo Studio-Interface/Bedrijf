@@ -70,7 +70,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ctx = canvas.getContext('2d');
 
-  const LINE_COUNT = 42;
+  const LINE_COUNT = 24;
   const POINTS = 80;
   const COLOR_A = [59, 130, 246];
   const COLOR_B = [155, 93, 229];
@@ -101,21 +101,19 @@
     const progress = i / (LINE_COUNT - 1);
     const baseY = H * 0.5 + (progress - 0.5) * H * 0.9;
 
-    const amp = 28 + Math.sin(progress * Math.PI) * 60;
-    const freq = 0.0018 + progress * 0.0006;
-    const speed = 0.0006 + progress * 0.00045;
+    const amp = 18 + Math.sin(progress * Math.PI) * 35;
+    const freq = 0.0015 + progress * 0.0004;
+    const speed = 0.0003 + progress * 0.00025;
     const phase = progress * Math.PI * 2;
 
     const [r, g, b] = lerpColor(COLOR_A, COLOR_B, progress);
     const edgeFade = Math.sin(progress * Math.PI);
-    const alpha = 0.06 + edgeFade * 0.22;
+    const alpha = 0.06 + edgeFade * 0.18;
 
     ctx.beginPath();
     for (let p = 0; p <= POINTS; p++) {
       const x = (p / POINTS) * W;
-      const wave =
-        Math.sin(x * freq + t * speed + phase) * amp +
-        Math.sin(x * freq * 2.3 + t * speed * 1.7 + phase * 0.6) * amp * 0.35;
+      const wave = Math.sin(x * freq + t * speed + phase) * amp;
       const y = baseY + wave;
       if (p === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
@@ -130,7 +128,7 @@
     ctx.clearRect(0, 0, W, H);
     ctx.lineCap = 'round';
     for (let i = 0; i < LINE_COUNT; i++) drawLine(i);
-    t += 16;
+    t += 18;
     rafId = requestAnimationFrame(frame);
   }
 
@@ -525,5 +523,67 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
       targetRY = 0;
       queueAnimation();
     });
+  });
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   LOADING SCREEN — fade out after page load
+───────────────────────────────────────────────────────────── */
+(function initLoadingScreen() {
+  const loadingScreen = document.getElementById('loadingScreen');
+  if (!loadingScreen) return;
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      loadingScreen.classList.add('hide');
+    }, 2500);
+  });
+
+  // Fallback if page load takes too long
+  setTimeout(() => {
+    if (!loadingScreen.classList.contains('hide')) {
+      loadingScreen.classList.add('hide');
+    }
+  }, 4000);
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   PAGE TRANSITIONS — fade effect when leaving page
+───────────────────────────────────────────────────────────── */
+(function initPageTransitions() {
+  // Create page transition overlay
+  const transition = document.createElement('div');
+  transition.className = 'page-transition';
+  document.body.appendChild(transition);
+
+  // Handle external links from portfolio
+  const portfolioLinks = document.querySelectorAll('a[href^="http"]');
+
+  portfolioLinks.forEach(link => {
+    // Skip if link opens in new tab
+    if (link.target === '_blank') {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        
+        // Show transition overlay
+        transition.classList.add('active');
+        
+        // Navigate after transition starts
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+        
+        e.preventDefault();
+      });
+    }
+  });
+
+  // Handle back button transitions
+  window.addEventListener('pageshow', (event) => {
+    transition.classList.remove('active');
+  });
+
+  window.addEventListener('pagehide', (event) => {
+    transition.classList.add('active');
   });
 })();

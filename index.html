@@ -8,14 +8,26 @@
     <title>Jordy Frohn — Front-end Developer</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Syne:wght@400..800&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+  <!-- ══════════════════════════════════════════
+       LOADING SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+    <div class="loading-screen__content">
+      <img src="assets/light.svg" alt="" class="loading-screen__logo" aria-hidden="true">
+      <div class="loading-screen__bar-container">
+        <div class="loading-screen__bar"></div>
+      </div>
+    </div>
+  </div>
 
   <canvas id="particles" aria-hidden="true"></canvas>
 
@@ -75,7 +87,7 @@
 
                 <h1 class="hero__title">
                     Websites<br />
-                    <em class="hero__title-em">op maat.</em>
+                    <em class="hero__title-em">op maat</em>
                 </h1>
 
                 <p class="hero__sub">
