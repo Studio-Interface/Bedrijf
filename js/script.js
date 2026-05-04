@@ -1,5 +1,5 @@
 /* =============================================================
-   MAIN.JS  — vanilla JS only, no dependencies
+   SCRIPT.JS  — vanilla JS only, no dependencies
    ============================================================= */
 'use strict';
 
@@ -548,42 +548,54 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 })();
 
 /* ─────────────────────────────────────────────────────────────
-   PAGE TRANSITIONS — fade effect when leaving page
+   PAGE TRANSITIONS — bar wipe on external navigation
 ───────────────────────────────────────────────────────────── */
 (function initPageTransitions() {
-  // Create page transition overlay
-  const transition = document.createElement('div');
-  transition.className = 'page-transition';
-  document.body.appendChild(transition);
+  // Build overlay with bars
+  const overlay = document.createElement('div');
+  overlay.className = 'page-transition';
 
-  // Handle external links from portfolio
-  const portfolioLinks = document.querySelectorAll('a[href^="http"]');
+  const BAR_COUNT = 5;
+  for (let i = 0; i < BAR_COUNT; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'page-transition__bar';
+    overlay.appendChild(bar);
+  }
+  document.body.appendChild(overlay);
 
-  portfolioLinks.forEach(link => {
-    // Skip if link opens in new tab
-    if (link.target === '_blank') {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        
-        // Show transition overlay
-        transition.classList.add('active');
-        
-        // Navigate after transition starts
-        setTimeout(() => {
+  // Total duration: bar animation (0.5s) + max stagger (0.20s) = 700ms
+  const ANIM_DURATION = 750;
+
+  function showOverlay() {
+    overlay.classList.add('active');
+  }
+
+  function hideOverlay() {
+    // CSS transition on opacity/visibility handles the fade-out
+    overlay.classList.remove('active');
+  }
+
+  // Intercept all external links
+  document.querySelectorAll('a[href^="http"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      const newTab = link.target === '_blank';
+
+      showOverlay();
+
+      setTimeout(() => {
+        if (newTab) {
+          window.open(href, '_blank', 'noopener,noreferrer');
+          // Fade overlay back out after the new tab opens
+          setTimeout(hideOverlay, 300);
+        } else {
           window.location.href = href;
-        }, 300);
-        
-        e.preventDefault();
-      });
-    }
+        }
+      }, ANIM_DURATION);
+    });
   });
 
-  // Handle back button transitions
-  window.addEventListener('pageshow', (event) => {
-    transition.classList.remove('active');
-  });
-
-  window.addEventListener('pagehide', (event) => {
-    transition.classList.add('active');
-  });
+  // Reset overlay on back-button navigation
+  window.addEventListener('pageshow', hideOverlay);
 })();
